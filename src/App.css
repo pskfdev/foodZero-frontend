@@ -1,38 +1,68 @@
-.App {
-  text-align: center;
+* {
+  margin: 0;
+  padding: 0;
+  box-sizing: border-box;
 }
 
-.App-logo {
-  height: 40vmin;
-  pointer-events: none;
+/* .navbar {
+  width: 100%;
+  position: absolute;
+  top: 0;
+} */
+
+nav h1:hover {
+  color: #233000;
+  transition: 0.4s ease-in-out;
 }
 
-@media (prefers-reduced-motion: no-preference) {
-  .App-logo {
-    animation: App-logo-spin infinite 20s linear;
-  }
+
+.bg {
+  width: 100%;
+  height: 100%;
+  background: url("https://images.unsplash.com/photo-1661956601031-4cf09efadfce?ixlib=rb-1.2.1&ixid=MnwxMjA3fDF8MHxwaG90by1wYWdlfHx8fGVufDB8fHx8&auto=format&fit=crop&w=876&q=80");
+  background-size: cover;
+  background-color: #233000;
+  background-blend-mode: soft-light;
 }
 
-.App-header {
-  background-color: #282c34;
-  min-height: 100vh;
-  display: flex;
-  flex-direction: column;
-  align-items: center;
-  justify-content: center;
-  font-size: calc(10px + 2vmin);
-  color: white;
+.bg2 {
+  width: 100%;
+  height: 100%;
+  background: url("https://s3-alpha-sig.figma.com/img/ce0b/3acf/c0d9388caade32a3d346d110e813588e?Expires=1665964800&Signature=JwQWmNXHYSV90z0rVGuGZ34kj5KrtQkhbsnWS9dIiPEfmSEbrECJOF-6j~O-p-v~Jn9EwfIZvYpt9hZFXgaYoNK6P~z-bGgrB2FAAKzr89pm8BAHa5iAmqnz-37Q89lppOaJfOgWqSIpOytXR9UZruFwUt89Ku8h~blkSTDfXWyokgclKLowelno0fMU2g-KqRWV~Mu3tI7XdBQ1wT52I9yHZXqFj7ChxP6cQPviVASm55M4qMQP6ifu4QiDm1NJv0wEfFL2jf7ohEZGFLa86dDf8pn994Xb5GZGGAvU4p5txmXpIUheto6CVbb1I3ex6iRHj2Dl16BxNR53dp9BTw__&Key-Pair-Id=APKAINTVSUGEWH5XD5UA");
+  background-size: cover;
 }
 
-.App-link {
-  color: #61dafb;
+h1, h2, h3, h4, h5, p {
+  color: #fff;
 }
 
-@keyframes App-logo-spin {
-  from {
-    transform: rotate(0deg);
-  }
-  to {
-    transform: rotate(360deg);
-  }
+.tdark p {
+  color: black;
 }
+.tdark h1 {
+  color: black;
+}
+
+.closebtn {
+  position: absolute;
+  top: 30px;
+  left: 30px;
+}
+
+.menu {
+    cursor: pointer;
+    font-size: 1.5rem;
+}
+
+.trotate {
+  transform: rotate(-90deg);
+  left: 0;top: 0;
+  padding: 0;
+}
+
+.foot-top {
+  border-bottom: 2px dotted #fff;
+}
+
+
+

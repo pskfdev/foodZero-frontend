@@ -1,0 +1,30 @@
+/* @import "../node_modules/bootstrap/scss/variables";
+@import "../node_modules/bootstrap/scss/functions"; */
+
+$spacer: 1rem;
+$spacers: (
+    0: 0,
+    1: ($spacer * .25),
+    2: ($spacer * .5),
+    3: $spacer,
+    4: ($spacer * 1.5),
+    5: ($spacer * 3),
+    6: ($spacer * 3.5),
+    7: ($spacer * 6)
+);
+
+$primary: #233000;
+$info: #5E6600;
+$success: #9CAA00;
+$warning: #EBF0E4;
+
+
+
+
+@import "../node_modules/bootstrap/scss/bootstrap.scss";
+
+@media screen and (max-width: 767px) {
+    .w-sm-80 {
+        width: 80% !important;
+    }
+}
