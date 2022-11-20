@@ -9,17 +9,27 @@ function Navbarr() {
     const [show, setShow] = useState(false);
     const handleClose = () => setShow(false);
     const handleShow = () => setShow(true);
+    const [colorNav, setColorNav] = useState(false);
+
+    const changColorNav = () => {
+      if(window.scrollY >= 80){
+        setColorNav(true);
+      }else{
+        setColorNav(false);
+      }
+    };
+    window.addEventListener('scroll', changColorNav);
 
   return (
     <>
-      <Navbar expand="lg" variant="dark" fixed="top">
+      <Navbar expand="lg" variant="dark" fixed="top" className={colorNav ? 'bg-primary text-white':''}>
         <Container fluid className="mx-5">
           <div className="d-flex">
             <Navbar.Brand as={Link} to="/">FoodZero</Navbar.Brand>
             <FiMenu className="my-auto ms-4 menu text-white" onClick={handleShow} />
           </div>
           <div className="d-flex d-none d-sm-flex">
-            <p className="my-auto me-3">+66968845847</p>
+            <p className="my-auto me-3">+86 852 346 000</p>
             <Button size="md" variant="outline-light">Reservation</Button>
           </div>
         </Container>
@@ -37,8 +47,8 @@ function Navbarr() {
               <Nav.Link as={Link} to="/menu" onClick={handleClose}>
                 <h1>Menu</h1>
               </Nav.Link>
-              <Nav.Link as={Link} to="/about" onClick={handleClose}>
-                <h1>About</h1>
+              <Nav.Link as={Link} to="/blog" onClick={handleClose}>
+                <h1>Blog</h1>
               </Nav.Link>
               <Nav.Link as={Link} to="/contact" onClick={handleClose}>
                 <h1>Contact</h1>

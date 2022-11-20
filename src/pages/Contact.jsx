@@ -1,4 +1,4 @@
-import React from "react";
+import React, { useEffect } from "react";
 import Formreserv from "../components/Formreserv";
 import Header from "../components/Header";
 import imgContact from "../img/Hcontact.png";
@@ -8,6 +8,10 @@ import contact2 from "../img/Contact2.png";
 import bgcontact from "../img/BgContact.png";
 
 function Contact() {
+  useEffect(() => {
+    window.scrollTo(0, 0); /* scroll to top when render page */
+  }, []);
+
   return (
     <>
       <Header
@@ -18,9 +22,7 @@ function Contact() {
       <Container
         className="my-7 py-7"
         style={{
-          backgroundImage: `url(${bgcontact})`,
-          backgroundRepeat: "no-repeat",
-          backgroundPosition: "center top",
+          background: `url(${bgcontact}) no-repeat center top`,
           backgroundSize: "300px auto",
         }}
       >
@@ -44,7 +46,13 @@ function Contact() {
             <p className="w-75 text-dark">
               We are located in 1959 Sepulveda Blvd. Culver City, CA, 90230
             </p>
-            <Button variant="outline-dark">Veiw in maps</Button>
+            <Button
+              variant="outline-dark"
+              href="https://www.google.com/maps/place/Sepulveda+Blvd,+Culver+City,+CA,+%E0%B8%AA%E0%B8%AB%E0%B8%A3%E0%B8%B1%E0%B8%90%E0%B8%AD%E0%B9%80%E0%B8%A1%E0%B8%A3%E0%B8%B4%E0%B8%81%E0%B8%B2/@33.9995968,-118.4030951,17z/data=!3m1!4b1!4m5!3m4!1s0x80c2ba0fe1fa3f7d:0x9a832e6c1a48997!8m2!3d33.9995924!4d-118.4009064"
+              target="_blank"
+            >
+              Veiw in maps
+            </Button>
           </Col>
           <Col className="" xs={{ order: 1 }} md={{ order: 2 }}>
             <Image src={contact2} fluid />

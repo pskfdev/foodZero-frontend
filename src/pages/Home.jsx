@@ -1,4 +1,4 @@
-import React from "react";
+import React, { useEffect } from "react";
 import Formreserv from "../components/Formreserv";
 import ThreeIcons from "../components/ThreeIcons";
 import { Row, Col, Container, Image } from "react-bootstrap";
@@ -9,8 +9,13 @@ import home4 from "../img/home4.png";
 import home5 from "../img/home5.png";
 import bgleaf from "../img/bgleaf.png";
 import bgleaf2 from "../img/bgleaf2.png";
+import ImgLoad from "../components/ImgLoad";
 
 function Home() {
+  useEffect(() => {
+    window.scrollTo(0, 0); /* scroll to top when render page */
+  }, []);
+
   return (
     <>
       <div className="bg-primary">
@@ -32,11 +37,7 @@ function Home() {
               xs={{ span: 12, offset: 0 }}
               className="pt-6"
             >
-              <Image
-                src={home1}
-                rounded
-                style={{ width: "100%", height: "600px" }}
-              />
+              <ImgLoad src={home1} />
             </Col>
           </Row>
 
@@ -45,7 +46,7 @@ function Home() {
               <Image
                 src={home2}
                 rounded
-                style={{ width: "100%", height: "400px" }}
+                style={{ width: "100%", height: "400px", objectFit: "cover" }}
               />
               <div className="w-75 mt-5">
                 <h1>Start to plan your diet today</h1>
@@ -69,7 +70,7 @@ function Home() {
               <Image
                 src={home3}
                 rounded
-                style={{ width: "100%", height: "500px" }}
+                style={{ width: "100%", height: "500px", objectFit: "cover" }}
               />
             </Col>
           </Row>
@@ -79,9 +80,7 @@ function Home() {
       <div
         className="bg-white"
         style={{
-          backgroundImage: `url(${home4})`,
-          backgroundRepeat: "no-repeat",
-          backgroundPosition: "right top",
+          background: `url(${home4}) no-repeat right top`,
           backgroundSize: "600px auto",
         }}
       >
@@ -128,21 +127,20 @@ function Home() {
             <Col
               lg={6}
               style={{
-                backgroundImage: `url(${bgleaf})`,
-                backgroundRepeat: "no-repeat",
-                backgroundPosition: "left top",
+                background: `url(${bgleaf}) no-repeat left top`,
                 backgroundSize: "50% auto",
               }}
             >
-              <Image src={home5} style={{ width: "100%", height: "600px" }} />
+              <Image
+                src={home5}
+                style={{ width: "100%", height: "600px", objectFit: "cover" }}
+              />
             </Col>
             <Col
               lg={6}
               style={{
-                backgroundImage: `url(${bgleaf2})`,
-                backgroundRepeat: "no-repeat",
-                backgroundPosition: "right bottom",
-                backgroundSize: "60% auto",
+                background: `url(${bgleaf2}) no-repeat right bottom`,
+                backgroundSize: "50% auto",
               }}
             >
               <div className="w-75 mx-auto">

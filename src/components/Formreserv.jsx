@@ -13,7 +13,7 @@ function Formreserv() {
           <Form.Group className="my-5">
             <Row>
               <Col xs={12} md>
-                <Form.Control placeholder="25/09/22" />
+                <Form.Control placeholder="dd/mm/yy" />
               </Col>
               <Col xs={12} md>
                 <Form.Select>
