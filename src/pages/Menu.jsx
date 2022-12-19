@@ -6,11 +6,13 @@ import { Container, Row, Col, Button, Nav } from "react-bootstrap";
 import ReactLoading from "react-loading";
 import FetchLoad from "../components/FetchLoad";
 
+
 function Menu() {
   const [data, setData] = useState([]);
   const [loading, setLoading] = useState(false); /* variable loading */
   const [category, setCategory] = useState([]); /* variable keep item follow category */
   const [visible, setVisible] = useState(4); /* variable loading more item */
+
 
   const filterItem = (title) => {
     const updateItems = data.filter((item) => {
@@ -54,7 +56,7 @@ function Menu() {
       <Header
         img={imgMenu}
         head="View Our New Menu"
-        title="The freshest ingredients for you every day."
+        title="The freshest ingredients for you every day"
       />
 
       <Container className="my-6 py-7">
