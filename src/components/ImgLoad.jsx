@@ -13,7 +13,7 @@ function ImgLoad({ src }) {
         src={src}
         fluid
         rounded
-        onLoad={() => setTimeout(() => setImgLoading(true), 2000)}
+        onLoad={() => setTimeout(() => setImgLoading(true), 500)}
         style={{ width: "100%", height: "600px", objectFit: "cover" }}
       />
     </>

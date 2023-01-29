@@ -12,17 +12,20 @@ export const usersSlice = createSlice({
     signin: (state,action) => {
       /* state.value = "The freshest ingredients for you every day"; */
       state.user = action.payload
-      state.admin = true
+      /* state.admin = true */
     },
     LOGOUT: (state,action) => {
       localStorage.clear()
       state.user = action.payload
       state.admin = false
     },
+    CHECKADMIN: (state,action) => {
+      state.admin = true
+    }
   },
 });
 
 // Action creators are generated for each case reducer function
-export const { signin, LOGOUT } = usersSlice.actions;
+export const { signin, LOGOUT, CHECKADMIN } = usersSlice.actions;
 
 export default usersSlice.reducer;

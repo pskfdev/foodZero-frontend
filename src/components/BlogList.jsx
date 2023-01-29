@@ -1,9 +1,9 @@
-import React, {useState} from "react";
+import React, { useState } from "react";
 import { Row, Col, Image } from "react-bootstrap";
 import ReactReadMoreReadLess from "react-read-more-read-less";
 import ImgPlaceholder from "./ImgPlaceholder";
 
-function BlogList({ src, title, detail }) {
+function BlogList({ src, title, description }) {
   const [ImgLoading, setImgLoading] = useState(false);
 
   return (
@@ -15,10 +15,12 @@ function BlogList({ src, title, detail }) {
           alt={title}
           rounded
           fluid
-          className={`mx-auto ${ImgLoading ? "d-block" : "d-none"}`}
-          onLoad={() => setTimeout(() => setImgLoading(true), 2000)}
+          className={`mx-auto shadow ${ImgLoading ? "d-block" : "d-none"}`}
+          onLoad={() => setTimeout(() => setImgLoading(true), 500)}
           style={{
             objectFit: "cover",
+            width: "100%",
+            height: "500px",
           }}
         />
       </Col>
@@ -34,7 +36,7 @@ function BlogList({ src, title, detail }) {
               readMoreStyle={{ color: "#9CAA00", cursor: "pointer" }}
               readLessStyle={{ color: "#9CAA00", cursor: "pointer" }}
             >
-              {detail}
+              {description}
             </ReactReadMoreReadLess>
           </p>
         </div>

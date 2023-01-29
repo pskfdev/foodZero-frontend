@@ -37,6 +37,7 @@ function ManageUser() {
       .then((res) => {
         /* console.log(res); */
         loadData(user.user.token);
+        alert(`Change role ${res.data.username} success!`)
       })
       .catch((err) => {
         console.log(err.response);

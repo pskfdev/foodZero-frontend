@@ -2,38 +2,53 @@ import React, { useEffect, useState } from "react";
 import Formreserv from "../components/Formreserv";
 import Header from "../components/Header";
 import imgMenu from "../img/menu.png";
-import { Container, Row, Col, Button, Nav } from "react-bootstrap";
+import { Container, Row, Col, Button, Image, Modal } from "react-bootstrap";
 import ReactLoading from "react-loading";
 import FetchLoad from "../components/FetchLoad";
-
+import { listProduct, readProduct } from "../functions/product";
+import { listCategory } from "../functions/category";
 
 function Menu() {
   const [data, setData] = useState([]);
+  const [filter, setFilter] = useState([]); /* variable keep item follow category */
+  const [category, setCategory] = useState([]); /* variable category */
+  const [visible, setVisible] = useState(6); /* variable loading more item */
   const [loading, setLoading] = useState(false); /* variable loading */
-  const [category, setCategory] = useState([]); /* variable keep item follow category */
-  const [visible, setVisible] = useState(4); /* variable loading more item */
+  const [dataModal, setDataModal] = useState([]); /* variable Modal Product */
+  const [showModal, setShowModal] = useState(false); /* variable show Modal */
+  const [modalCategory, setModalCategory] = useState(); /* variable Modal category */
+  const [activeId, setActiveId] = useState("All"); /* variable Active Button */
 
-
-  const filterItem = (title) => {
+  const filterItem = (datafilter) => {
     const updateItems = data.filter((item) => {
-      return item.title == title;
+      return item.category.name == datafilter;
     });
-    setCategory(updateItems);
+    setFilter(updateItems);
+    setActiveId(datafilter);
   };
 
   const showMoreItems = () => {
     setVisible(
-      (prevValue) => prevValue + 1
+      (prevValue) => prevValue + 3
     ); /* function set item show when onclick  */
   };
 
-  const fetchData = async () => {
+  const loadCategory = () => {
+    listCategory()
+      .then((res) => {
+        setCategory(res.data);
+      })
+      .catch((err) => {
+        console.log(err);
+      });
+  };
+
+  const loadProduct = () => {
     /* variable function fetch */
-    await fetch("./Data.json")
-      .then((response) => response.json())
-      .then((data) => {
-        setData(data);
-        setCategory(data);
+    listProduct()
+      .then((res) => {
+        setData(res.data);
+        setFilter(res.data);
         setLoading(false);
       })
       .catch((err) => {
@@ -42,11 +57,25 @@ function Menu() {
       });
   };
 
+  const loadModal = (id) => {
+    readProduct(id)
+      .then((res) => {
+        setDataModal(res.data);
+        setModalCategory(res.data.category.name);
+        setShowModal(true);
+      })
+      .catch((err) => {
+        console.log(err);
+      });
+  };
+
+  /* console.log(activeId); */
   useEffect(() => {
     window.scrollTo(0, 0); /* scroll to top when render page */
     setLoading(true); /* แสดงการโหลดก่อน */
     const timer = setTimeout(() => {
-      fetchData();
+      loadProduct();
+      loadCategory();
     }, 1000); /* หน่วงเวลา 2000 s แล้วค่อย fetch data */
     return () => clearTimeout(timer);
   }, []);
@@ -60,20 +89,31 @@ function Menu() {
       />
 
       <Container className="my-6 py-7">
-        <Nav className="justify-content-center mb-5">
-          <Nav.Item>
-            <Nav.Link onClick={() => setCategory(data)}>All</Nav.Link>
-          </Nav.Item>
-          {data.map((item) => {
+        <div className="justify-content-center mb-6 d-flex mx-auto flex-column flex-lg-row">
+          <Button
+            onClick={() => {
+              setFilter(data);
+              setActiveId("All");
+            }}
+            variant="light"
+            className={activeId === "All" ? "active" : ""}
+          >
+            All
+          </Button>
+
+          {category.map((item) => {
             return (
-              <Nav.Item>
-                <Nav.Link onClick={() => filterItem(`${item.title}`)}>
-                  {item.title}
-                </Nav.Link>
-              </Nav.Item>
+              <Button
+                onClick={() => filterItem(`${item.name}`)}
+                variant="light"
+                className={`ms-lg-3 ms-0 ${activeId === item.name ? "active" : ""}`}
+                key={item._id}
+              >
+                {item.name}
+              </Button>
             );
           })}
-        </Nav>
+        </div>
 
         {loading ? (
           <ReactLoading
@@ -87,11 +127,20 @@ function Menu() {
           /* Condition operator - condition ? (true):(false) */
           /* .slice(0, visible) เอา array 0-4 มา map */
           <Row xs={1} sm={1} md={2} lg={3} className="gy-5">
-            {category.slice(0, visible).map((item) => {
+            {filter.slice(0, visible).map((item) => {
               return (
-                <Col className="" key={item.id}>
-                  <FetchLoad src={item} />
-                  <h1 className="text-dark text-center">{item.title}</h1>
+                <Col
+                  className=""
+                  key={item._id}
+                  onClick={() => loadModal(item._id)}
+                >
+                  <FetchLoad
+                    src={`${process.env.REACT_APP_IMAGE}${item.image}`}
+                  />
+                  <div className="d-flex justify-content-between mt-3">
+                    <h4 className="text-secondary text-center">{item.title}</h4>
+                    <h4 className="text-success text-center">{`${item.price} ฿`}</h4>
+                  </div>
                 </Col>
               );
             })}
@@ -110,6 +159,31 @@ function Menu() {
         )}
       </Container>
       <Formreserv />
+
+      <Modal
+        show={showModal}
+        onHide={() => setShowModal(false)}
+        size="lg"
+        centered
+      >
+        <Modal.Body>
+          <Row>
+            <Col xs={12} md={8} lg={7}>
+              <Image
+                src={`${process.env.REACT_APP_IMAGE}${dataModal.image}`}
+                fluid
+              />
+            </Col>
+            <Col xs={12} md={4} lg={5}>
+              <h3 className="text-success text-center">{dataModal.title}</h3>
+              <hr style={{ borderTop: "4px dotted #000" }} />
+              <p className="text-dark"><span className="text-success">Description : </span>{dataModal.description}</p>
+              <p className="text-dark"><span className="text-success">Category : </span>{modalCategory}</p>
+              <p className="text-dark"><span className="text-success">Price : </span>{`${dataModal.price} ฿`}</p>
+            </Col>
+          </Row>
+        </Modal.Body>
+      </Modal>
     </>
   );
 }

@@ -9,11 +9,7 @@ export const createCategory = async (authtoken, value) => {
 };
 
 export const listCategory = async (authtoken) =>
-  await axios.get(process.env.REACT_APP_API + "/category", {
-    headers: {
-      authtoken,
-    },
-  });
+  await axios.get(process.env.REACT_APP_API + "/category");
 
 export const deleteCategory = async (authtoken, id) =>
   await axios.delete(process.env.REACT_APP_API + "/category/" + id, {

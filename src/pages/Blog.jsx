@@ -6,39 +6,35 @@ import imgAbout from "../img/Habout.png";
 import ReactLoading from "react-loading";
 import { Container } from "react-bootstrap";
 import NavPagination from "../components/NavPagination";
+import { listBlog } from "../functions/blog"
 
 function Blog() {
   const [data, setData] = useState([]); /* variable keep data fetch */
   const [loading, setLoading] = useState(false); /* variable loading */
+
   const [currentPage, setCurrentPage] = useState(1); /* variable pagination */
   const [recordsPerPage] = useState(4); /* variable pagination */
-  const indexOfLastRecord =
-    currentPage * recordsPerPage; /* variable pagination */
-  const indexOfFirstRecord =
-    indexOfLastRecord - recordsPerPage; /* variable pagination */
-  const nPages = Math.ceil(
-    data.length / recordsPerPage
-  ); /* variable pagination */
+  const indexOfLastRecord = currentPage * recordsPerPage; /* variable pagination */
+  const indexOfFirstRecord = indexOfLastRecord - recordsPerPage; /* variable pagination */
+  const nPages = Math.ceil(data.length / recordsPerPage); /* variable pagination */
 
-  const fetchData = async () => {
-    /* variable function fetch */
-    await fetch("./DataMaterial.json")
-      .then((response) => response.json())
-      .then((data) => {
-        setData(data);
+  const loadData = async () => {
+    listBlog()
+      .then((res) => {
         setLoading(false);
-      })
-      .catch((err) => {
+        console.log(res.data);
+        setData(res.data);
+      }).catch((err) => {
         console.log(err);
         setLoading(false);
-      });
+      })
   };
 
   useEffect(() => {
     window.scrollTo(0, 0); /* scroll to top when render page */
     setLoading(true); /* แสดงการโหลดก่อน */
     const timer = setTimeout(() => {
-      fetchData();
+      loadData();
     }, 500); /* หน่วงเวลา 2000 s แล้วค่อย fetch data */
     return () => clearTimeout(timer);
   }, []);
@@ -65,9 +61,10 @@ function Blog() {
             {data.slice(indexOfFirstRecord, indexOfLastRecord).map((item) => {
               return (
                 <BlogList
-                  src={item.url}
+                  src={`${process.env.REACT_APP_IMAGE}${item.image}`}
                   title={item.title}
-                  detail={item.detail}
+                  description={item.description}
+                  key={item._id}
                 />
               );
             })}

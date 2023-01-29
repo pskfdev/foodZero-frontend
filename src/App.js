@@ -11,11 +11,12 @@ import Register from "./pages/Register";
 import Login from "./pages/Login";
 import HomeAdmin from "./pages/admin/HomeAdmin";
 import AdminRoute from "./pages/protect/AdminRoute";
+import UpdateProduct from "./pages/admin/product/UpdateProduct";
 // functions
 import { currentUser } from "./functions/auth";
 // redux
 import { useDispatch } from "react-redux";
-import { signin } from "./store/usersSlice";
+import { signin, LOGOUT } from "./store/usersSlice";
 
 function App() {
   const dispatch = useDispatch();
@@ -26,7 +27,6 @@ function App() {
   if (idtoken) {
     currentUser(idtoken)
       .then((res) => {
-        //code
         console.log(res.data);
         dispatch(
           signin({
@@ -37,31 +37,52 @@ function App() {
         );
       })
       .catch((err) => {
-        //err
         console.log(err);
       });
+  } else {
+    dispatch(LOGOUT());
   }
 
   return (
     <div className="App">
       <Navbarr />
-      <Routes>
-        <Route path="/" element={<Home />} />
-        <Route path="/menu" element={<Menu />} />
-        <Route path="/blog" element={<Blog />} />
-        <Route path="/contact" element={<Contact />} />
-        <Route path="/register" element={<Register />} />
-        <Route path="/login" element={<Login />} />
+      
+      <div className="main">
+        <Routes>
+          <Route path="/" element={<Home />} />
+          <Route path="/menu" element={<Menu />} />
+          <Route path="/blog" element={<Blog />} />
+          <Route path="/contact" element={<Contact />} />
+          <Route path="/register" element={<Register />} />
+          <Route path="/login" element={<Login />} />
+          <Route
+            path="*"
+            element={
+              <h1 className="text-center text-dark h-100">
+                There's nothing here: 404!
+              </h1>
+            }
+          />
 
-        <Route
-          path="/admin/HomeAdmin"
-          element={
-            <AdminRoute>
-              <HomeAdmin />
-            </AdminRoute>
-          }
-        />
-      </Routes>
+          <Route
+            path="/admin/HomeAdmin"
+            element={
+              <AdminRoute>
+                <HomeAdmin />
+              </AdminRoute>
+            }
+          />
+          <Route
+            path="/admin/update-product/:id"
+            element={
+              <AdminRoute>
+                <UpdateProduct />
+              </AdminRoute>
+            }
+          />
+        </Routes>
+      </div>
+
       <Footer />
     </div>
   );

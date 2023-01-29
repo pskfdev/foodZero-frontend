@@ -6,20 +6,22 @@ import {
   Button,
   Modal,
   CloseButton,
+  Dropdown,
+  DropdownButton,
   Card,
 } from "react-bootstrap";
 import { FiMenu, FiUser, FiLogOut } from "react-icons/fi";
 import { Link, useNavigate } from "react-router-dom";
 //redux
-import { useDispatch,useSelector } from "react-redux";
-import { LOGOUT } from '../store/usersSlice';
-
+import { useDispatch, useSelector } from "react-redux";
+import { LOGOUT } from "../store/usersSlice";
 
 function Navbarr() {
   const [show, setShow] = useState(false);
   const handleClose = () => setShow(false);
   const handleShow = () => setShow(true);
   const [colorNav, setColorNav] = useState(false);
+  const roleUser = localStorage.roleUser;
 
   const navigate = useNavigate();
   const dispatch = useDispatch();
@@ -38,17 +40,15 @@ function Navbarr() {
 
   /* //clear local storeg when logout */
   const logout = () => {
-    dispatch(
-      LOGOUT() 
-    );
+    dispatch(LOGOUT());
     navigate("/");
   };
 
   const scrollReserv = (e) => {
     e.preventDefault();
     window.scrollTo(0, document.body.scrollHeight);
-  }
-
+  };
+  /* console.log(user.user) */
 
   return (
     <>
@@ -68,20 +68,35 @@ function Navbarr() {
               onClick={handleShow}
             />
           </div>
-          <div className="d-flex d-none d-sm-flex">
-            <p className="my-auto me-3">+86 852 346 000</p>
-            <Button size="md" variant="outline-light" onClick={scrollReserv}>
+          <div className="d-flex">
+            <p className="my-auto me-3 d-none d-sm-flex">+86 852 346 000</p>
+            <Button
+              className="d-none d-sm-flex me-2"
+              variant="outline-light"
+              onClick={scrollReserv}
+            >
               Reservation
             </Button>
-            <Link to="/login" className="my-auto mx-auto ms-3 menu text-white">
-              <FiUser className="menu" />
-            </Link>
-            <span
-              className="my-auto mx-auto ms-3 menu text-white"
-              onClick={logout}
-            >
-              <FiLogOut className="menu" />
-            </span>
+
+            {(!user.user || user.user.length === 0) && (
+              <Link
+                to="/login"
+                className="my-auto mx-auto ms-3 menu text-white"
+              >
+                <FiUser className="menu" />
+              </Link>
+            )}
+
+            {(user.user && user.user.length !== 0) && (
+              <DropdownButton title={user.user.username} variant="outline-success" align="end">
+                <Dropdown.Item>
+                  <span className="text-dark mx-auto d-flex" onClick={logout}>
+                    <FiLogOut className="my-auto"/>
+                    <p className="text-dark my-auto text-inline px-2">logout</p>
+                  </span>
+                </Dropdown.Item>
+              </DropdownButton>
+            )}
           </div>
         </Container>
       </Navbar>
@@ -96,7 +111,7 @@ function Navbarr() {
           />
           <Container className="w-75 d-flex justify-content-between">
             <Nav className="d-flex flex-column">
-              <Nav.Link as={Link} to="/" onClick={handleClose}>
+              <Nav.Link as={Link}  to="/" onClick={handleClose}>
                 <h1>Home</h1>
               </Nav.Link>
               <Nav.Link as={Link} to="/menu" onClick={handleClose}>
@@ -108,11 +123,11 @@ function Navbarr() {
               <Nav.Link as={Link} to="/contact" onClick={handleClose}>
                 <h1>Contact</h1>
               </Nav.Link>
-              {user.admin &&
-              <Nav.Link as={Link} to="/admin/HomeAdmin" onClick={handleClose}>
-                <h1>Admin</h1>
-              </Nav.Link>
-              }
+              {roleUser === 'admin' && (
+                <Nav.Link as={Link} to="/admin/HomeAdmin" onClick={handleClose}>
+                  <h1>Admin</h1>
+                </Nav.Link>
+              )}
             </Nav>
             <Card
               className="d-none d-md-block"

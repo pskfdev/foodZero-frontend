@@ -9,9 +9,9 @@ function FetchLoad({src}) {
     <>
       {!ImgLoading && <ImgPlaceholder width="100%" height="400" />}
       <Image
-        className={`mx-auto ${ImgLoading ? "d-block" : "d-none"}`}
-        src={src.url}
-        onLoad={() => setTimeout(() => setImgLoading(true), 2000)}
+        className={`mx-auto shadow ${ImgLoading ? "d-block" : "d-none"}`}
+        src={src}
+        onLoad={() => setTimeout(() => setImgLoading(true), 500)}
         rounded
         style={{
           width: "100%",
