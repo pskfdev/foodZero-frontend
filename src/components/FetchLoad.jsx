@@ -17,6 +17,7 @@ function FetchLoad({src}) {
           width: "100%",
           height: "400px",
           objectFit: "cover",
+          cursor: "pointer"
         }}
       />
     </>

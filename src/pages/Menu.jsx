@@ -3,6 +3,7 @@ import Formreserv from "../components/Formreserv";
 import Header from "../components/Header";
 import imgMenu from "../img/menu.png";
 import { Container, Row, Col, Button, Image, Modal } from "react-bootstrap";
+import { FiX } from "react-icons/fi";
 import ReactLoading from "react-loading";
 import FetchLoad from "../components/FetchLoad";
 import { listProduct, readProduct } from "../functions/product";
@@ -10,13 +11,16 @@ import { listCategory } from "../functions/category";
 
 function Menu() {
   const [data, setData] = useState([]);
-  const [filter, setFilter] = useState([]); /* variable keep item follow category */
+  const [filter, setFilter] = useState(
+    []
+  ); /* variable keep item follow category */
   const [category, setCategory] = useState([]); /* variable category */
   const [visible, setVisible] = useState(6); /* variable loading more item */
   const [loading, setLoading] = useState(false); /* variable loading */
   const [dataModal, setDataModal] = useState([]); /* variable Modal Product */
   const [showModal, setShowModal] = useState(false); /* variable show Modal */
-  const [modalCategory, setModalCategory] = useState(); /* variable Modal category */
+  const [modalCategory, setModalCategory] =
+    useState(); /* variable Modal category */
   const [activeId, setActiveId] = useState("All"); /* variable Active Button */
 
   const filterItem = (datafilter) => {
@@ -88,7 +92,7 @@ function Menu() {
         title="The freshest ingredients for you every day"
       />
 
-      <Container className="my-6 py-7">
+      <Container className="my-6 py-lg-7 py-0">
         <div className="justify-content-center mb-6 d-flex mx-auto flex-column flex-lg-row">
           <Button
             onClick={() => {
@@ -106,7 +110,9 @@ function Menu() {
               <Button
                 onClick={() => filterItem(`${item.name}`)}
                 variant="light"
-                className={`ms-lg-3 ms-0 ${activeId === item.name ? "active" : ""}`}
+                className={`ms-lg-3 ms-0 ${
+                  activeId === item.name ? "active" : ""
+                }`}
                 key={item._id}
               >
                 {item.name}
@@ -175,11 +181,28 @@ function Menu() {
               />
             </Col>
             <Col xs={12} md={4} lg={5}>
-              <h3 className="text-success text-center">{dataModal.title}</h3>
+              <FiX
+                role="button"
+                style={{ position: "absolute", top: "10px", right: "10px" }}
+                size={28}
+                onClick={() => setShowModal(false)}
+              />
+              <h3 className="text-success text-center py-lg-0 py-sm-3">
+                {dataModal.title}
+              </h3>
               <hr style={{ borderTop: "4px dotted #000" }} />
-              <p className="text-dark"><span className="text-success">Description : </span>{dataModal.description}</p>
-              <p className="text-dark"><span className="text-success">Category : </span>{modalCategory}</p>
-              <p className="text-dark"><span className="text-success">Price : </span>{`${dataModal.price} ฿`}</p>
+              <p className="text-dark">
+                <span className="text-success">Description : </span>
+                {dataModal.description}
+              </p>
+              <p className="text-dark">
+                <span className="text-success">Category : </span>
+                {modalCategory}
+              </p>
+              <p className="text-dark">
+                <span className="text-success">Price : </span>
+                {`${dataModal.price} ฿`}
+              </p>
             </Col>
           </Row>
         </Modal.Body>
