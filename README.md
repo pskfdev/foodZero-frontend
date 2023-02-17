@@ -25,5 +25,5 @@
 ## website & template
 
 > [Website FoodZero](https://food-zero.vercel.app/)
-> 
+
 > [Design](https://www.figma.com/file/yAr5LbuSqNFvBdUBTdfHxX/Food-for-Figma-Web-Template-(Community)?node-id=5805%3A1118&t=SRjOAprSouQ08qkS-0)
